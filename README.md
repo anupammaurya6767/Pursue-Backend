@@ -11,7 +11,7 @@ Short description of the project.
 1. **Clone the repository:**
 
    ```bash
-   https://github.com/kunxl-gg/Amrit-Career-Counsellor.git
+   https://github.com/anupammaurya6767/Pursue-Backend.git
    cd Amrit-Career-Counsellor
    ```
 
