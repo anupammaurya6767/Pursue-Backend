@@ -10,6 +10,9 @@ var UserRoutes *gin.RouterGroup
 
 // Types for Firebase Schema
 type FirebaseUser struct {
+	UserID             *string
+	OrderID            *string
+	CustomerID         *string
 	Name               *string
 	Email              *string
 	PhoneNumber        int
@@ -18,6 +21,7 @@ type FirebaseUser struct {
 	Options            []string
 	FinalCareerOptions []string
 }
+
 
 type FirebaseAdminUser struct {
 	Name     *string

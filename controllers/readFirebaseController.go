@@ -1,6 +1,6 @@
-package controllers
-
 // This File has the Controllers for all the Read Operations to Firebase
+
+package controllers
 
 import (
 	"fmt"
@@ -66,6 +66,7 @@ func GetUserController(ctx *gin.Context) {
 	doc, err := firebase_middleware.GetUserFromFirebase(userId)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	// Returning Final Json when everything goes fine
@@ -83,7 +84,7 @@ func GetCareerOptionsController(ctx *gin.Context) {
 		http.StatusOK,
 		gin.H{
 			"result": description,
-		},	
+		},
 	)
 }
 
@@ -92,7 +93,7 @@ func GetCareerOptionController(ctx *gin.Context) {
 
 	// Fetching the Career Title from the Request Body
 	var CareerTitle struct {
-		Title *string 
+		Title *string
 	}
 	ctx.Bind(&CareerTitle)
 

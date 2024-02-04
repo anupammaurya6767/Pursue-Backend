@@ -8,23 +8,24 @@ import (
 
 // TrackMixpanelController - Method to interact with Mixpanel
 func TrackMixpanelController(ctx *gin.Context) {
-
 	// Capturing the request body
-	var MixpanelEvent struct {
+	var mixpanelEvent struct {
 		Event  *string
 		Object *string
 	}
-	err := ctx.Bind(&MixpanelEvent)
+	err := ctx.Bind(&mixpanelEvent)
 	if err != nil {
-		ctx.String(http.StatusInternalServerError, err.Error())
+		ctx.String(http.StatusBadRequest, "Failed to parse request body: "+err.Error())
+		return
 	}
 
 	// Tracking an event using Mixpanel
-	resp, err := MixPanel.TrackMixpanelEvent(*MixpanelEvent.Event, *MixpanelEvent.Object)
+	resp, err := MixPanel.TrackMixpanelEvent(*mixpanelEvent.Event, *mixpanelEvent.Object)
 	if err != nil {
-		ctx.String(http.StatusInternalServerError, err.Error())
+		ctx.String(http.StatusInternalServerError, "Failed to track Mixpanel event: "+err.Error())
+		return
 	}
+
 	// Sending a 200 response if everything goes right
 	ctx.String(http.StatusOK, resp)
-
 }
