@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -24,7 +23,7 @@ func AddUserController(ctx *gin.Context) {
 	}
 
 	// Adding User to Firestore
-	userId, err := firebase_middleware.AddUserToFirebase(*user.Name, *user.Email, user.PhoneNumber, user.DidStartChatbot, user.IsPaidUser, user.Options, user.FinalCareerOptions)
+	id, err := firebase_middleware.AddUserToFirebase(*user)
 	if err != nil {
 		log.Println("There was an error in adding user to Firestore:", err)
 		ctx.String(http.StatusInternalServerError, "Failed to add user to Firestore: "+err.Error())
