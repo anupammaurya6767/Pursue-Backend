@@ -23,7 +23,7 @@ func AddUserController(ctx *gin.Context) {
 	}
 
 	// Adding User to Firestore
-	id, err := firebase_middleware.AddUserToFirebase(*user)
+	id, err := firebase_middleware.AddUserToFirebase(user)
 	if err != nil {
 		log.Println("There was an error in adding user to Firestore:", err)
 		ctx.String(http.StatusInternalServerError, "Failed to add user to Firestore: "+err.Error())
@@ -31,7 +31,7 @@ func AddUserController(ctx *gin.Context) {
 	}
 
 	// Returning the final userID
-	ctx.String(http.StatusOK, userId)
+	ctx.String(http.StatusOK, id)
 }
 
 // DeleteUserController - Method to delete User from Firestore
@@ -77,12 +77,12 @@ func UpdateOptionsController(ctx *gin.Context) {
 	userId := ctx.Param("userId")
 
 	var options struct {
-		NewOptionSelected *string
+		NewOptionSelected *string `json:"newOptionSelected"`
 	}
 	ctx.BindJSON(&options)
 
 	// Updating Options for User
-	err := firebase_middleware.UpdateSelectedOption(userId, *options.NewOptionSelected)
+	err := firebase_middleware.UpdateSelectedOption(userId, options.NewOptionSelected)
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, "Failed to update options for user: "+err.Error())
 		return
@@ -106,7 +106,7 @@ func AddCareerDescriptionToFirebaseController(ctx *gin.Context) {
 	}
 
 	// Adding Career Description to Firestore
-	careerId, err := firebase_middleware.AddCareerDescriptionToFirebase(*careerDescription.Name, *careerDescription.Description, careerDescription.TopColleges, careerDescription.AverageSalaries, careerDescription.CareerPathSteps, careerDescription.Courses, careerDescription.Skills)
+	careerId, err := firebase_middleware.AddCareerDescriptionToFirebase(careerDescription)
 	if err != nil {
 		log.Println("There was an error in adding career description to Firestore:", err)
 		ctx.String(http.StatusInternalServerError, "Failed to add career description to Firestore: "+err.Error())
